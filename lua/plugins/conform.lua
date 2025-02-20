@@ -21,8 +21,22 @@ return {
       }
     end,
     formatters_by_ft = {
+      cpp = { "uncrustify" },
+      c = { "uncrustify" },
       lua = { "stylua" },
-      python = { "yapf" },
+    },
+    formatters = {
+      uncrustify = {
+        command = "uncrustify",
+        args = {
+          "-c",
+          vim.fn.expand "~/catkin_ws/src/apptronik_core/uncrustify.cfg",
+          "--replace",
+          "--no-backup",
+          "$FILENAME",
+        },
+        stdin = false,
+      },
     },
   },
 }
