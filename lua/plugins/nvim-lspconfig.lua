@@ -63,6 +63,19 @@ return {
         handlers = {
           ["textDocument/publishDiagnostics"] = function() end,
         },
+        cmd = {
+          "clangd",
+          "--background-index",
+          "--clang-tidy",
+          "--completion-style=detailed",
+          "--header-insertion=iwyu",
+        },
+        capabilities = capabilities,
+        init_options = {
+          clangdFileStatus = true,
+          usePlaceholders = true,
+          completeUnimported = true,
+        },
       },
       pyright = {
         handlers = {
