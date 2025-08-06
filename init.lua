@@ -28,8 +28,10 @@ require("lazy").setup({
   require "plugins.oil",
   require "plugins.harpoon",
   require "plugins.git-blame",
-  -- require "plugins.avante",
+  require "plugins.nvim-lint",
   require "plugins.neo-tree",
+  require "plugins.copilot",
+  --   require "plugins.minute-ai",
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {
@@ -48,4 +50,9 @@ require("lazy").setup({
       lazy = "💤 ",
     },
   },
+})
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.launch",
+  command = "set filetype=xml",
 })

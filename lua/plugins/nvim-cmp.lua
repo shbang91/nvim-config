@@ -42,7 +42,7 @@ return {
 
         ["<C-y>"] = cmp.mapping.confirm { select = true },
 
-        ["<C-l>"] = cmp.mapping(function()
+        ["<C-t>"] = cmp.mapping(function()
           if luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
           end

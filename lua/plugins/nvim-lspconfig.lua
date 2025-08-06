@@ -99,16 +99,18 @@ return {
     vim.list_extend(ensure_installed, {
       "stylua",
     })
-    require("mason-tool-installer").setup { ensure_installed = ensure_installed }
+    require("mason-tool-installer").setup { ensure_installed = vim.tbl_keys(servers) }
 
-    require("mason-lspconfig").setup {
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-          require("lspconfig")[server_name].setup(server)
-        end,
-      },
-    }
+    for server_name, server_opts in pairs(servers) do
+      -- The server_opts variable is the table of custom settings from above
+      -- (e.g., the `cmd` and `init_options` for clangd)
+
+      -- We ensure every server setup gets our general on_attach and capabilities
+      server_opts.on_attach = on_attach
+      server_opts.capabilities = capabilities
+
+      -- Finally, call lspconfig's setup with the combined options
+      require("lspconfig")[server_name].setup(server_opts)
+    end
   end,
 }

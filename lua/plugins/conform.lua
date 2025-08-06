@@ -12,7 +12,7 @@ return {
     },
   },
   opts = {
-    notify_on_error = false,
+    notify_on_error = true,
     format_on_save = function(bufnr)
       local disable_filetypes = {}
       return {
@@ -24,6 +24,10 @@ return {
       cpp = { "uncrustify" },
       c = { "uncrustify" },
       lua = { "stylua" },
+      -- Run black first, as it's the more comprehensive formatter.
+      -- flake8 was removed as it is a linter, not a formatter.
+      python = { "black" },
+      -- python = { "black", "autopep8" },
     },
     formatters = {
       uncrustify = {
@@ -36,6 +40,21 @@ return {
           "$FILENAME",
         },
         stdin = false,
+      },
+      autopep8 = {
+        command = "autopep8",
+        args = {
+          "--aggressive",
+          "--aggressive",
+          "-",
+        },
+        stdin = true,
+      },
+      -- Added the black formatter configuration
+      black = {
+        command = "black",
+        args = { "-" },
+        stdin = true,
       },
     },
   },
